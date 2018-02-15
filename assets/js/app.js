@@ -1,16 +1,23 @@
 $(document).ready(function () {
+  /* llama a modal */
   $('#myModal').modal('toggle')
 
+  /* funcion que se ejecuta al presionar cada imagen del personaje de star wars */
   $('.cardPer').click(function () {
+    /* se vacian los input */
     $('.modal-title').empty()
     $('.modal-body').empty();
-    var id = $(this).attr('id');
 
+    var id = $(this).attr('id');/* se obtiene el id del div, que es el que se utiliza para acceder a la información del personaje */
+
+    /* se obtiene la data de la api */
     $.ajax({
       url: 'https://swapi.co/api/people/' + id,
       type: 'GET',
     }).done(function (data) {
-      $('.modal-title').text(data.name);
+      $('.modal-title').text(data.name);/* se rellena con el nombre */
+      
+      /* el body del modal se rellena con la información del personaje que es requerida */
       $('.modal-body').append('<div class="form-group">'+
                                 '<label for="inputHeight">Estatura</label>'+
                                 '<input type="text" class="form-control" id="inputHeight" value="'+data.height+'">'+
