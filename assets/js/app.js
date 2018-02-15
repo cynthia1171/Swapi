@@ -1,20 +1,30 @@
-$(document).ready(function () {
-  
+$(document).ready(function() {
+  $('#myModal').modal('toggle')
+
+  var id = 0;
   $.ajax({
     url: 'https://swapi.co/api/people',
     type: 'GET',
-    success: function (results) {
-      console.log(results);
-      var largo = results.results.length;
-      for (var i = 0; i<=largo; i++) {
-        var nombre = $('<p  id="' + i + '" class="card">' + results.results[i].name + '</p>');
-        $('.monitos').append(nombre);
-      }
+  }).done(function (data) {
+    var arr = data.results;
+    for (var i in arr) {
+      var datos = arr[i];
+      $('.monitos').append('<div class="col-md-4 cardPer" id="' + i +'" data-toggle="modal" data-target="#modal">' + datos.name + '</div>' +
+        '');
     }
-  });
-})
 
-$('.card').click(function(){
-  var idPersonaje = $(this).attr('id');
-  console.log(idPersonaje);
-})
+    $('.cardPer').click(function () {
+      var valor = parseInt($(this).attr('id'));
+      id = valor +1;
+      alert(id);
+    })
+  })
+    .fail(handleError);
+});
+
+
+/* funcion que se ejecuta cuando ocurre algún error */
+function handleError() {
+  console.log('Se ha presentado un error');
+}
+
